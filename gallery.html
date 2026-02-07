@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loga's Gallery | LDverse</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff4ed;
+      color: #3e2f23;
+    }
+
+    /* Header */
+    header {
+      background-color: #38220f;
+      padding: 20px 0;
+      color: #fff2e1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      font-family: 'Playfair Display', serif;
+      color: #f8f0e6;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: #fff2e1;
+      font-size: 1em;
+      padding: 6px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a.active {
+      background-color: #a1866f;
+    }
+
+    /* Filter Buttons */
+    .filter-buttons {
+      text-align: center;
+      margin: 30px 0 10px;
+    }
+
+    .filter-buttons button {
+      background-color: #e8dcc9;
+      color: #3e2f23;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 8px;
+      cursor: pointer;
+      font-size: 1em;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .filter-buttons button:hover {
+      background-color: #d5bdaf;
+    }
+
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .image-card {
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      transition: transform 0.3s;
+      text-align: center;
+    }
+
+    .image-card:hover {
+      transform: scale(1.02);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .like-btn {
+      background-color: #d8c3a5;
+      border: none;
+      color: #3e2f23;
+      padding: 6px 12px;
+      margin: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+
+    .like-btn:hover {
+      background-color: #cbb292;
+    }
+
+    footer {
+      background-color: #38220f;
+      color: #fff2e1;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.95em;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="navbar">
+      <div class="logo">LDverse</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Filter Buttons -->
+  <section class="filter-buttons">
+    <button onclick="filterImages('all')">All</button>
+    <button onclick="filterImages('nature')">Nature</button>
+    <button onclick="filterImages('portrait')">Portraits</button>
+    <button onclick="filterImages('urban')">Urban</button>
+    <button onclick="filterImages('abstract')">Abstract</button>
+  </section>
+
+  <!-- Gallery Section -->
+  <main class="gallery" id="gallery"></main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Loga Dhiviya | Made with ❤️ and a cup of coffee ☕</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    const images = [
+      // Nature
+      { url: "https://source.unsplash.com/400x300/?nature,1", category: "nature" },
+      { url: "https://source.unsplash.com/400x300/?forest,2", category: "nature" },
+      { url: "https://source.unsplash.com/400x300/?mountain,3", category: "nature" },
+      { url: "https://source.unsplash.com/400x300/?river,4", category: "nature" },
+      { url: "https://source.unsplash.com/400x300/?tree,5", category: "nature" },
+      { url: "https://source.unsplash.com/400x300/?sky,6", category: "nature" },
+      { url: "https://source.unsplash.com/400x300/?lake,7", category: "nature" },
+      { url: "https://source.unsplash.com/400x300/?flowers,8", category: "nature" },
+
+      // Portraits
+      { url: "https://source.unsplash.com/400x300/?portrait,woman", category: "portrait" },
+      { url: "https://source.unsplash.com/400x300/?portrait,man", category: "portrait" },
+      { url: "https://source.unsplash.com/400x300/?portrait,model", category: "portrait" },
+      { url: "https://source.unsplash.com/400x300/?face,closeup", category: "portrait" },
+      { url: "https://source.unsplash.com/400x300/?girl,smile", category: "portrait" },
+      { url: "https://source.unsplash.com/400x300/?boy,portrait", category: "portrait" },
+      { url: "https://source.unsplash.com/400x300/?old,portrait", category: "portrait" },
+
+      // Urban
+      { url: "https://source.unsplash.com/400x300/?city,lights", category: "urban" },
+      { url: "https://source.unsplash.com/400x300/?architecture,modern", category: "urban" },
+      { url: "https://source.unsplash.com/400x300/?street,night", category: "urban" },
+      { url: "https://source.unsplash.com/400x300/?buildings,skyline", category: "urban" },
+      { url: "https://source.unsplash.com/400x300/?urban,life", category: "urban" },
+      { url: "https://source.unsplash.com/400x300/?bridge,city", category: "urban" },
+      { url: "https://source.unsplash.com/400x300/?metro,subway", category: "urban" },
+
+      // Abstract
+      { url: "https://source.unsplash.com/400x300/?abstract,colors", category: "abstract" },
+      { url: "https://source.unsplash.com/400x300/?light,shadow", category: "abstract" },
+      { url: "https://source.unsplash.com/400x300/?texture,closeup", category: "abstract" },
+      { url: "https://source.unsplash.com/400x300/?shapes,abstract", category: "abstract" },
+      { url: "https://source.unsplash.com/400x300/?minimal,design", category: "abstract" },
+      { url: "https://source.unsplash.com/400x300/?pattern,geometry", category: "abstract" },
+      { url: "https://source.unsplash.com/400x300/?artistic,photo", category: "abstract" }
+    ];
+
+    const gallery = document.getElementById("gallery");
+
+    function renderImages(category = "all") {
+      gallery.innerHTML = "";
+      images
+        .filter(img => category === "all" || img.category === category)
+        .forEach((img, index) => {
+          const card = document.createElement("div");
+          card.className = `image-card ${img.category}`;
+          card.innerHTML = `
+            <img src="${img.url}" alt="Photo ${index + 1}" loading="lazy">
+            <button class="like-btn" onclick="likeImage(this)">♡ Like</button>
+          `;
+          gallery.appendChild(card);
+        });
+    }
+
+    function filterImages(category) {
+      renderImages(category);
+    }
+
+    function likeImage(btn) {
+      btn.innerText = btn.innerText.includes("♡") ? "♥ Liked" : "♡ Like";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderImages();
+    });
+  </script>
+</body>
+</html>
